@@ -1,4 +1,4 @@
-import random
+from random import choice
 
 CHOICES: tuple = ('R', 'P', 'S')
 BEATS: dict = {
@@ -11,21 +11,19 @@ RPS: dict = {
     'P': "Paper",
     'S': "Scissors"
 }
-MESSAGE: str = "Game modes: User vs. Computer (U) | Computer vs. Computer (C)"
 
 
 class Player:
-    def __init__(self):
-        self.name: str = ""
-        self.type: str = ""  # Either "user" or "bot"
+    def __init__(self, name: str):
+        self.name: str = name
         self.move: str = ''
         self.score: int = 0
     
     def play(self):
         """Make a move"""
-        if self.type == "bot":
-            self.move = random.choice(CHOICES)
-        elif self.type == "user":
+        if self.name == "Computer":
+            self.move = choice(CHOICES)
+        else:
             while True:
                 move = input("What's your choice?: ")
                 if move.upper() in CHOICES:
@@ -33,33 +31,12 @@ class Player:
                     break
                 else:
                     print("Invalid input")
-        else:
-            print("Invalid player type")
 
 
 class Game:
     def __init__(self):
-        self.player1: Player = Player()
-        self.player2: Player = Player()
-    
-    def gameMode(self):
-        """Game modes: User vs. Computer (U) | Computer vs. Computer (C)"""
-        while True:
-            gameMode = input(f"Select game mode\n{MESSAGE}\n> ")
-            if gameMode.upper() == 'U':
-                self.player1.type = "user"
-                self.player1.name = "You"
-                self.player2.type = "bot"
-                self.player2.name = "Computer"
-                break
-            elif gameMode.upper() == 'C':
-                self.player1.type = "bot"
-                self.player1.name = "Computer 1"
-                self.player2.type = "bot"
-                self.player2.name = "Computer 2"
-                break
-            else:
-                print("Invalid input")
+        self.player1: Player = Player("You")
+        self.player2: Player = Player("Computer")
         
     def winner(self):
         """Returns the winner Player if there's a winner, None if there's a tie"""
@@ -88,7 +65,6 @@ class Game:
     
     def game(self):
         """The game itself"""
-        self.gameMode()
         while True:
             try:
                 rounds = int(input("How many rounds?\n> "))
