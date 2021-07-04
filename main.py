@@ -24,7 +24,7 @@ class PlayGame(App):
         self.window.add_widget(self.logo)
         self.startButton = Button(
             text="Start",
-            size_hint=(.5, .5),
+            size_hint=(.5, .25),
             background_color="#03C04A",
             bold=True,
             background_normal="",
