@@ -1,5 +1,5 @@
 from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.uix.button import Button
@@ -9,32 +9,33 @@ from kivy.core.window import Window
 
 class PlayGame(App):
     def build(self):
-        self.window = GridLayout()
+        window = BoxLayout(orientation="vertical")
         Window.clearcolor = (1, 1, 1, 1)
-        self.window.cols = 1
-        self.gameTitle = Label(
+        gameTitle = Label(
             text="Rock Paper Scissors",
             font_size=20,
-            size_hint=(.5, .5),
+            size_hint=(.1, .1),
+            pos_hint={"center_x": .5, "center_y": .5},
             color="#03C04A",
             bold=True
         )
-        self.window.add_widget(self.gameTitle)
-        self.logo = Image(source="favicon.png")
-        self.window.add_widget(self.logo)
-        self.startButton = Button(
+        window.add_widget(gameTitle)
+        logo = Image(source="favicon.png", pos_hint={"center_x": .5, "center_y": .5})
+        window.add_widget(logo)
+        startButton = Button(
             text="Start",
-            size_hint=(.5, .25),
+            size_hint=(1, .25),
+            pos_hint={"center_x": .5, "center_y": .5},
             background_color="#03C04A",
             bold=True,
             background_normal="",
             font_size=18
         )
-        self.window.add_widget(self.startButton)
-        self.window.size_hint = (.6, .9)
-        self.window.pos_hint = {"center_x": .5, "center_y": .5}
+        window.add_widget(startButton)
+        window.size_hint = (.6, .9)
+        window.pos_hint = {"center_x": .5, "center_y": .5}
 
-        return self.window
+        return window
 
 
 if __name__ == "__main__":
