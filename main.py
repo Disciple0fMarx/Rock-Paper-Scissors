@@ -35,12 +35,40 @@ Builder.load_string("""
 <GameWindow>:
     BoxLayout:
         orientation: "vertical"
-        Label:
-            text: "You made it here!"
-            color: "#000000"
         Button:
             text: "Go back"
+            background_color: "#03C04A"
+            background_normal: ""
+            pos_hint: {"x": 0, "y": 0}
+            size_hint: .2, .2
             on_release: app.root.current = "start"
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, .25
+            Label:
+                text: "You: 0"
+                color: "#000000"
+                font_size: 20
+            Label:
+                text: "Computer: 0"
+                color: "#000000"
+                font_size: 20
+        Label:
+            text: "Make a move"
+            color: "#000000"
+            font_size: 20
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, .5
+            Button:
+                text: "Rock"
+                font_size: 20
+            Button:
+                text: "Paper"
+                font_size: 20
+            Button:
+                text: "Scissors"
+                font_size: 20
 """)
 
 
