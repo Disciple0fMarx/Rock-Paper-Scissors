@@ -8,6 +8,8 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 
+__author__ = "Dhya El Bahri"
+
 
 Builder.load_string("""
 <StartWindow>:
