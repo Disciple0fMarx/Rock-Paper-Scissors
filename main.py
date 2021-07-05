@@ -8,8 +8,13 @@ from kivy.core.window import Window
 
 
 class PlayGame(App):
+    def start(self, instance):
+        """Takes you to the actual game"""
+        print("The button has been clicked!")
+
     def build(self):
-        window = BoxLayout(orientation="vertical")
+        """Start menu"""
+        start_menu = BoxLayout(orientation="vertical")
         Window.clearcolor = (1, 1, 1, 1)
         gameTitle = Label(
             text="Rock Paper Scissors",
@@ -19,9 +24,9 @@ class PlayGame(App):
             color="#03C04A",
             bold=True
         )
-        window.add_widget(gameTitle)
+        start_menu.add_widget(gameTitle)
         logo = Image(source="favicon.png", pos_hint={"center_x": .5, "center_y": .5})
-        window.add_widget(logo)
+        start_menu.add_widget(logo)
         startButton = Button(
             text="Start",
             size_hint=(1, .25),
@@ -31,11 +36,12 @@ class PlayGame(App):
             background_normal="",
             font_size=18
         )
-        window.add_widget(startButton)
-        window.size_hint = (.6, .9)
-        window.pos_hint = {"center_x": .5, "center_y": .5}
+        startButton.bind(on_press=self.start)
+        start_menu.add_widget(startButton)
+        start_menu.size_hint = (.6, .9)
+        start_menu.pos_hint = {"center_x": .5, "center_y": .5}
 
-        return window
+        return start_menu
 
 
 if __name__ == "__main__":
