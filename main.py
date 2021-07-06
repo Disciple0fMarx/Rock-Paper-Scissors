@@ -10,6 +10,7 @@ Builder.load_string("""
 <StartWindow>:
     BoxLayout:
         orientation: "vertical"
+        size: root.width, root.height
         Label:
             text: "Rock Paper Scissors"
             font_size: 20
@@ -18,7 +19,7 @@ Builder.load_string("""
             color: "#03C04A"
             bold: True
         Image:
-            source: "favicon.png"
+            source: "img/logo.png"
             pos_hint: {"center_x": .5, "center_y": .5}
         Button:
             text: "Start"
@@ -32,6 +33,7 @@ Builder.load_string("""
 <GameWindow>:
     BoxLayout:
         orientation: "vertical"
+        size: root.width, root.height
         Button:
             text: "Go back"
             background_color: "#03C04A"
@@ -57,26 +59,67 @@ Builder.load_string("""
         BoxLayout:
             orientation: "horizontal"
             size_hint: 1, .5
+            padding: 20
             Button:
-                text: "Rock"
-                font_size: 20
+                size_hint: .7, .7
+                background_color: 1, 1, 1, 1
+                background_normal: ""
+                on_press: root.rock_on()
+                on_release: root.rock_off()
+                Image:
+                    id: "rock"
+                    source: "img/rock.png"
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
             Button:
-                text: "Paper"
-                font_size: 20
+                size_hint: .7, .7
+                background_color: 1, 1, 1, 1
+                background_normal: ""
+                on_press: root.paper_on()
+                on_release: root.paper_off()
+                Image:
+                    id: "paper"
+                    source: "img/paper.png"
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
             Button:
-                text: "Scissors"
-                font_size: 20
+                size_hint: .7, .7
+                background_color: 1, 1, 1, 1
+                background_normal: ""
+                on_press: root.scissors_on()
+                on_release: root.scissors_off()
+                Image:
+                    id: "scissors"
+                    source: "img/scissors.png"
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
 """)
 
 
 class StartWindow(Screen):
-    """The start menu"""
+    """The start screen"""
     pass
 
 
 class GameWindow(Screen):
-    """The actual game"""
-    pass
+    """The actual game screen"""
+    def rock_on(self):
+        self.ids.rock.source = "img/rock_pressed.png"
+
+    def rock_off(self):
+        self.ids.rock.source = "img/rock.png"
+
+    def paper_on(self):
+        self.ids.paper.source = "img/paper_pressed.png"
+
+    def paper_off(self):
+        self.ids.paper.source = "img/paper.png"
+    
+    def scissors_on(self):
+        self.ids.scissors.source = "img/scissors_pressed.png"
+
+    def scissors_off(self):
+        self.ids.scissors.source = "img/scissors.png"
 
 
 class PlayGame(App):
