@@ -77,6 +77,7 @@ Builder.load_string("""
                 background_normal: ""
                 on_press: root.paper_on()
                 on_release: root.paper_off()
+                allow_stretch: False
                 Image:
                     id: "paper"
                     source: "img/paper.png"
@@ -104,25 +105,25 @@ class StartWindow(Screen):
 class GameWindow(Screen):
     """The actual game screen"""
     def rock_on(self):
-        self.ids.rock.source = "img/rock_pressed.png"
+        self.ids['"rock"'].source = "img/rock_pressed.png"
 
     def rock_off(self):
-        self.ids.rock.source = "img/rock.png"
+        self.ids['"rock"'].source = "img/rock.png"
 
     def paper_on(self):
-        self.ids.paper.source = "img/paper_pressed.png"
+        self.ids['"paper"'].source = "img/paper_pressed.png"
 
     def paper_off(self):
-        self.ids.paper.source = "img/paper.png"
+        self.ids['"paper"'].source = "img/paper.png"
     
     def scissors_on(self):
-        self.ids.scissors.source = "img/scissors_pressed.png"
+        self.ids['"scissors"'].source = "img/scissors_pressed.png"
 
     def scissors_off(self):
-        self.ids.scissors.source = "img/scissors.png"
+        self.ids['"scissors"'].source = "img/scissors.png"
 
 
-class PlayGame(App):
+class PlayGame(App):   
     def build(self):
         """The application we're running"""
         Window.clearcolor = (1, 1, 1, 1)
@@ -135,6 +136,7 @@ class PlayGame(App):
         self.start_screen.pos_hint = {"center_x": .5, "center_y": .5}
         screen = Screen(name="game")
         self.game_screen = GameWindow()
+        print(self.game_screen.ids)
         screen.add_widget(self.game_screen)
         screen_manager.add_widget(screen)
         return screen_manager
