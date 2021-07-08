@@ -13,9 +13,9 @@ Builder.load_string("""
         size: root.width, root.height
         Label:
             text: "Rock Paper Scissors"
-            font_size: 20
+            font_size: 22
             size_hint: .1, .1
-            pos_hint: {"center_x": .5, "center_y": .5}
+            pos_hint: {"center_x": .5}
             color: "#03C04A"
             bold: True
         Image:
@@ -23,8 +23,10 @@ Builder.load_string("""
             pos_hint: {"center_x": .5, "center_y": .5}
         Button:
             text: "Start"
-            size_hint: 1, .25
-            pos_hint: {"center_x": .5, "center_y": .5}
+            size_hint: None, None
+            width: 200
+            height: 100
+            pos_hint: {"center_x": .5}
             background_color: "#03C04A"
             bold: True
             background_normal: ""
@@ -39,7 +41,9 @@ Builder.load_string("""
             background_color: "#03C04A"
             background_normal: ""
             pos_hint: {"x": 0, "y": 0}
-            size_hint: .2, .2
+            size_hint: None, None
+            height: 50
+            width: 50
             on_release: app.root.current = "start"
         BoxLayout:
             orientation: "horizontal"
@@ -56,44 +60,59 @@ Builder.load_string("""
             text: "Make a move"
             color: "#000000"
             font_size: 20
-        BoxLayout:
-            orientation: "horizontal"
-            size_hint: 1, .5
+            pos_hint: {"center_x": .5, "center_y": .5}
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "bottom"
             padding: 20
-            Button:
-                size_hint: .7, .7
-                background_color: 1, 1, 1, 1
-                background_normal: ""
-                on_press: root.rock_on()
-                on_release: root.rock_off()
-                Image:
-                    id: "rock"
-                    source: "img/rock.png"
-                    center_x: self.parent.center_x
-                    center_y: self.parent.center_y
-            Button:
-                size_hint: .7, .7
-                background_color: 1, 1, 1, 1
-                background_normal: ""
-                on_press: root.paper_on()
-                on_release: root.paper_off()
-                allow_stretch: False
-                Image:
-                    id: "paper"
-                    source: "img/paper.png"
-                    center_x: self.parent.center_x
-                    center_y: self.parent.center_y
-            Button:
-                size_hint: .7, .7
-                background_color: 1, 1, 1, 1
-                background_normal: ""
-                on_press: root.scissors_on()
-                on_release: root.scissors_off()
-                Image:
-                    id: "scissors"
-                    source: "img/scissors.png"
-                    center_x: self.parent.center_x
-                    center_y: self.parent.center_y
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: None, None
+                width: 300
+                height: 100
+                Button:
+                    size_hint: None, None
+                    width: 100
+                    height: 100
+                    background_color: 1, 1, 1, 1
+                    background_normal: ""
+                    background_down: ""
+                    on_press: root.rock_on()
+                    on_release: root.rock_off()
+                    Image:
+                        id: "rock"
+                        source: "img/rock.png"
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                Button:
+                    size_hint: None, None
+                    width: 100
+                    height: 100
+                    background_color: 1, 1, 1, 1
+                    background_normal: ""
+                    background_down: ""
+                    on_press: root.paper_on()
+                    on_release: root.paper_off()
+                    allow_stretch: False
+                    Image:
+                        id: "paper"
+                        source: "img/paper.png"
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                Button:
+                    size_hint: None, None
+                    width: 100
+                    height: 100
+                    background_color: 1, 1, 1, 1
+                    background_normal: ""
+                    background_down: ""
+                    on_press: root.scissors_on()
+                    on_release: root.scissors_off()
+                    Image:
+                        id: "scissors"
+                        source: "img/scissors.png"
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
 """)
 
 
@@ -136,7 +155,6 @@ class PlayGame(App):
         self.start_screen.pos_hint = {"center_x": .5, "center_y": .5}
         screen = Screen(name="game")
         self.game_screen = GameWindow()
-        print(self.game_screen.ids)
         screen.add_widget(self.game_screen)
         screen_manager.add_widget(screen)
         return screen_manager
