@@ -2,8 +2,49 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
+from random import choice
 
 __author__ = "Dhya El Bahri"
+
+
+class Player:
+    choices: tuple = ('🗿', '📃', '✂️')
+    beats: dict = {'🗿': '✂️', '✂️': '📃', '📃': '🗿'}
+
+    def __init__(self, name: str):
+        self.name: str = name  # Either "user" or "computer"
+        self.move: str = ''
+        self.score: int = 0
+
+
+class Game:
+    def __init__(self):
+        self.user = Player("user")
+        self.computer = Player("computer")
+
+    def is_winner(self):
+        """Returns the winning Player, None if there's a tie"""
+        if Player.beats[self.user.move] == self.computer.move:
+            return self.user
+        if Player.beats[self.computer.move] == self.user.move:
+            return self.computer
+        return None
+    
+    def play(self, selected_move: str, *args, **kwargs):
+        """How we go about playing the game"""
+        self.user.move = selected_move
+        self.computer.move = choice(Player.choices)
+        if self.is_winner() == self.user:
+            print("You win!")
+            self.user.score += 1
+        elif self.is_winner() == self.computer:
+            print("You lose")
+            self.computer.score += 1
+        else:
+            print("Tie")
+
+
+game = Game()
 
 
 Builder.load_string("""
@@ -123,23 +164,28 @@ class StartWindow(Screen):
 
 class GameWindow(Screen):
     """The actual game screen"""
+    global game
+
     def rock_on(self):
         self.ids['"rock"'].source = "img/rock_pressed.png"
 
-    def rock_off(self):
+    def rock_off(self, *args, **kwargs):
         self.ids['"rock"'].source = "img/rock.png"
-
+        game.play('🗿')
+    
     def paper_on(self):
         self.ids['"paper"'].source = "img/paper_pressed.png"
 
-    def paper_off(self):
+    def paper_off(self, *args, **kwargs):
         self.ids['"paper"'].source = "img/paper.png"
+        game.play('📃')
     
     def scissors_on(self):
         self.ids['"scissors"'].source = "img/scissors_pressed.png"
 
-    def scissors_off(self):
+    def scissors_off(self, *args, **kwargs):
         self.ids['"scissors"'].source = "img/scissors.png"
+        game.play('✂️')
 
 
 class PlayGame(App):   
