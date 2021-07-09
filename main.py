@@ -223,4 +223,5 @@ class PlayGame(App):
 
 
 if __name__ == "__main__":
+    # I hope this works now
     PlayGame().run()
