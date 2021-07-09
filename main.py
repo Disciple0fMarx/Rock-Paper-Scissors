@@ -8,8 +8,8 @@ __author__ = "Dhya El Bahri"
 
 
 class Player:
-    choices: tuple = ('🗿', '📃', '✂️')
-    beats: dict = {'🗿': '✂️', '✂️': '📃', '📃': '🗿'}
+    choices: tuple = ('Rock', 'Paper', 'Scissors')
+    beats: dict = {'Rock': 'Scissors', 'Scissors': 'Paper', 'Paper': 'Rock'}
 
     def __init__(self, name: str):
         self.name: str = name  # Either "user" or "computer"
@@ -31,17 +31,21 @@ class Game:
         return None
     
     def play(self, selected_move: str, *args, **kwargs):
-        """How we go about playing the game"""
+        """How we go about playing the game
+           Oh, and this function returns a 3-tuple:
+           (self.user.score, self.computer.score, message)
+           'message' can be "You win!", "You lose!" or "Tie"
+        """
         self.user.move = selected_move
         self.computer.move = choice(Player.choices)
         if self.is_winner() == self.user:
-            print("You win!")
             self.user.score += 1
+            return (self.user.score, self.computer.score, "You win!")
         elif self.is_winner() == self.computer:
-            print("You lose")
             self.computer.score += 1
+            return (self.user.score, self.computer.score, "You lose")
         else:
-            print("Tie")
+            return (self.user.score, self.computer.score, "Tie")
 
 
 game = Game()
@@ -90,14 +94,17 @@ Builder.load_string("""
             orientation: "horizontal"
             size_hint: 1, .25
             Label:
+                id: "score_user"
                 text: "You: 0"
                 color: "#000000"
                 font_size: 20
             Label:
+                id: "score_computer"
                 text: "Computer: 0"
                 color: "#000000"
                 font_size: 20
         Label:
+            id: "console"
             text: "Make a move"
             color: "#000000"
             font_size: 20
@@ -171,21 +178,31 @@ class GameWindow(Screen):
 
     def rock_off(self, *args, **kwargs):
         self.ids['"rock"'].source = "img/rock.png"
-        game.play('🗿')
+        temp = game.play('Rock')
+        self.ids['"score_user"'].text = "You: " + str(temp[0])
+        self.ids['"score_computer"'].text = "Computer: " + str(temp[1])
+        self.ids['"console"'].text = f"You played 'Rock'\nComputer played '{game.computer.move}'\n{temp[2]}"
+
     
     def paper_on(self):
         self.ids['"paper"'].source = "img/paper_pressed.png"
 
     def paper_off(self, *args, **kwargs):
         self.ids['"paper"'].source = "img/paper.png"
-        game.play('📃')
+        temp = game.play('Paper')
+        self.ids['"score_user"'].text = "You: " + str(temp[0])
+        self.ids['"score_computer"'].text = "Computer: " + str(temp[1])
+        self.ids['"console"'].text = f"You played 'Paper'\nComputer played '{game.computer.move}'\n{temp[2]}"
     
     def scissors_on(self):
         self.ids['"scissors"'].source = "img/scissors_pressed.png"
 
     def scissors_off(self, *args, **kwargs):
         self.ids['"scissors"'].source = "img/scissors.png"
-        game.play('✂️')
+        temp = game.play('Scissors')
+        self.ids['"score_user"'].text = "You: " + str(temp[0])
+        self.ids['"score_computer"'].text = "Computer: " + str(temp[1])
+        self.ids['"console"'].text = f"You played 'Scissors'\nComputer played '{game.computer.move}'\n{temp[2]}"
 
 
 class PlayGame(App):   
