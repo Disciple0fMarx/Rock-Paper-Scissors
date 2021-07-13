@@ -82,14 +82,17 @@ Builder.load_string("""
         orientation: "vertical"
         size: root.width, root.height
         Button:
-            text: "Go back"
-            background_color: "#03C04A"
             background_normal: ""
+            background_down: ""
             pos_hint: {"x": 0, "y": 0}
             size_hint: None, None
             height: 50
             width: 50
             on_release: app.root.current = "start"
+            Image:
+                source: "img/back.png"
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
         BoxLayout:
             orientation: "horizontal"
             size_hint: 1, .25
@@ -195,7 +198,7 @@ class GameWindow(Screen):
     
     def scissors_on(self):
         self.ids['"scissors"'].source = "img/scissors_pressed.png"
-
+   
     def scissors_off(self, *args, **kwargs):
         self.ids['"scissors"'].source = "img/scissors.png"
         temp = game.play('Scissors')
@@ -223,5 +226,4 @@ class PlayGame(App):
 
 
 if __name__ == "__main__":
-    # Bruh moment
     PlayGame().run()
